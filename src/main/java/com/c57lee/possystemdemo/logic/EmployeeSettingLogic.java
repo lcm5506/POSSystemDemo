@@ -7,26 +7,26 @@ import java.util.List;
 
 public class EmployeeSettingLogic {
 
-    DAO<Employee,Long> dao;
+    DAO myDAO;
 
     public EmployeeSettingLogic(){
-        dao  = new DAO<>();
+        this.myDAO = DAO.getInstance();
     }
 
     public void addEmployee(Employee e){
-        dao.save(e);
+        myDAO.save(e);
     }
 
     public void updateEmployee(Employee e){
-        dao.update(e);
+        myDAO.update(e);
     }
 
     public void deleteEmployee(Employee e){
-        dao.remove(e);
+        myDAO.remove(e);
     }
 
     public List<Employee> getAllEmployee(){
-        return dao.findAll(Employee.class);
+        return myDAO.findAll(Employee.class);
     }
 
 }

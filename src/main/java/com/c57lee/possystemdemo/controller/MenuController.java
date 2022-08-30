@@ -1,19 +1,19 @@
 package com.c57lee.possystemdemo.controller;
 
 import com.c57lee.possystemdemo.obj.Menu;
-import com.c57lee.possystemdemo.persistence.DBOperations;
+import com.c57lee.possystemdemo.persistence.DAO;
 
 import java.util.List;
 
 public class MenuController {
 
-    DBOperations dbOperations;
+    DAO dao;
 
     public MenuController() {
-        this.dbOperations = new DBOperations();
+        this.dao = DAO.getInstance();
     }
 
     public List<Menu> getMenuList(){
-        return dbOperations.getAll("Menu");
+        return dao.findAll(Menu.class);
     }
 }

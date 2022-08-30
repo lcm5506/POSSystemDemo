@@ -7,25 +7,25 @@ import java.util.List;
 
 public class MenuSettingLogic {
 
-    DAO<Menu,Long> dao;
+    DAO myDAO;
 
     public MenuSettingLogic() {
-        this.dao = new DAO<>();
+        this.myDAO = DAO.getInstance();
     }
 
     public void addMenu(Menu m){
-        dao.save(m);
+        myDAO.save(m);
     }
 
     public void updateMenu(Menu m){
-        dao.update(m);
+        myDAO.update(m);
     }
 
     public void removeMenu(Menu m){
-        dao.remove(m);
+        myDAO.remove(m);
     }
 
     public List<Menu> getAllMenu(){
-        return dao.findAll(Menu.class);
+        return myDAO.findAll(Menu.class);
     }
 }

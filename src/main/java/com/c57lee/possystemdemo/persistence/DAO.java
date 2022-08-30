@@ -9,17 +9,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class DAO <T,ID> {
+public class DAO implements IDataAcessObject{
 
     EntityManagerFactory emf;
     EntityManager em;
+    private static DAO instance;
 
-
-    public DAO() {
+    private DAO() {
         emf = Persistence.createEntityManagerFactory("c57leePersistence");
         em = emf.createEntityManager();
     }
 
+    public static DAO getInstance(){
+        if (instance == null)
+           instance = new DAO();
+        return instance;
+    }
     public void executeInsideTransaction(Consumer<EntityManager> action){
         EntityTransaction et = em.getTransaction();
         try {
@@ -31,30 +36,30 @@ public class DAO <T,ID> {
             throw e;
         }
     }
-
-    public void save(T t) {
+    @Override
+    public <T> void save(T t) {
         executeInsideTransaction(em->em.persist(t));
     }
-
-    public Optional<T> findByID(Class<T> t,ID id) {
+    @Override
+    public <T,ID> Optional<T> findByID(Class<T> t,ID id) {
 
         return Optional.ofNullable(em.find(t,id));
     }
-
-    public List<T> findAll(Class<T> tClass) {
+    @Override
+    public <T> List<T> findAll(Class<T> tClass) {
         String q = String.format("SELECT c FROM %s c",tClass.getName());
         return em.createQuery(q,tClass).getResultList();
     }
-
-    public void update(T t) {
+    @Override
+    public <T> void update(T t) {
         executeInsideTransaction(em->em.merge(t));
     }
-
-    public void remove(T t){
+    @Override
+    public <T> void remove(T t){
         executeInsideTransaction(em->em.remove(em.contains(t) ? t : em.merge(t)));
     }
-
-    public boolean contains(T t){
+    @Override
+    public <T> boolean contains(T t){
         return em.contains(t);
     }
 }

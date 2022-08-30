@@ -8,30 +8,30 @@ import java.util.Optional;
 
 public class LocationSettingLogic {
 
-    DAO<Location,String> dao;
+    DAO myDAO;
 
     public LocationSettingLogic(){
-        dao = new DAO<>();
+        this.myDAO = DAO.getInstance();
     }
 
     public void addLocation(Location l){
-        dao.save(l);
+        myDAO.save(l);
     }
 
     public void updateLocation(Location l){
-        dao.update(l);
+        myDAO.update(l);
     }
 
     public void removeLocation(Location l){
-        dao.remove(l);
+        myDAO.remove(l);
     }
 
     public List<Location> getAllLocation(){
-        return dao.findAll(Location.class);
+        return myDAO.findAll(Location.class);
     }
 
     public boolean contains(Location l){
-        Optional<Location> searched = dao.findByID(Location.class,l.getLocationName());
+        Optional<Location> searched = myDAO.findByID(Location.class,l.getLocationName());
         if (searched.isPresent())
             return true;
         return false;

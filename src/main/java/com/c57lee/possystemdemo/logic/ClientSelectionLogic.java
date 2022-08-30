@@ -11,8 +11,7 @@ public class ClientSelectionLogic {
     DAO myDAO;
 
     public ClientSelectionLogic() {
-
-        this.myDAO = new DAO();
+        this.myDAO = DAO.getInstance();
     }
 
     public HashMap<String, Location> getLocationMap(){

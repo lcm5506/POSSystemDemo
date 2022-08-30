@@ -19,10 +19,10 @@ public class ClientSalesLogic {
     Location location;
 
     public ClientSalesLogic(){
-        this.myDAO = new DAO();
+        this.myDAO = DAO.getInstance();
     }
     public ClientSalesLogic(Client client){
-        this.myDAO = new DAO();
+        this.myDAO = DAO.getInstance();
         this.client = client;
         this.employee = client.getEmployee();
         this.location  = client.getLocation();
